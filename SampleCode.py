@@ -3,6 +3,7 @@ from picamera import PiCamera
 from datetime import datetime
 from signal import pause
 
+#hello world - ibro
 left_button = Button(2)
 right_button = Button(3)
 camera = PiCamera()
