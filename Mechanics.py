@@ -8,7 +8,7 @@ from time import sleep
 #This is the set-up code for the distance sensor
 dPin1 = 23;
 dPin2 = 24;
-sensor = DistanceSensor(dpin1, dpin2)
+sensor = DistanceSensor(dPin1, dPin2)
 distance = sensor.distance()
 #----------------------------------------
 

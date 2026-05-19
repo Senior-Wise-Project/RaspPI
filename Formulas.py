@@ -1,4 +1,4 @@
-import Math
+import math
 class Formulas:
     g = 9.81
     def findAngle(v, x, h, high):
