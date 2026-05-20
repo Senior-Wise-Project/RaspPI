@@ -1,7 +1,6 @@
 from time import sleep
 from picamera import PiCamera
 from pathlib import Path
-from IPython.utils.openpy import source_to_unicode
 
 camera = PiCamera()
 #-----------------------------------
@@ -18,7 +17,7 @@ camera.start_preview()
 sleep(2)
 #the camera finishes adjusting during these 2 seconds
 
-imagePath = Path.cwd() / Path('Images') / Path('image.jpg')
+imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
-
-camera.capture(imagePath)
+print(imagePath)
+#camera.capture(imagePath)
