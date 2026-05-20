@@ -19,5 +19,4 @@ sleep(2)
 
 imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
-print(imagePath)
-#camera.capture(imagePath)
+camera.capture(imagePath)
