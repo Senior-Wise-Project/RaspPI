@@ -1,8 +1,8 @@
 #We will be using the gpiozero library for rasberry pi
 from gpiozero import DistanceSensor
 from gpiozero import Motor
-from gpiozero import Stepper
 from time import sleep
+from Stepper import Stepper
 
 
 #This is the set-up code for the distance sensor
