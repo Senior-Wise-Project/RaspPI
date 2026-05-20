@@ -1,8 +1,8 @@
 from time import sleep
-from picamera import PiCamera
+from picamera2 import PiCamera2
 from pathlib import Path
 
-camera = PiCamera()
+camera = PiCamera2()
 #-----------------------------------
 # What you write:
     #camera = picamera.PiCamera()
@@ -11,12 +11,15 @@ camera = PiCamera()
     #camera = picamera.PiCamera(camera_num=0)
 #Max resolution: 2592 x 1944
 #------------------------------------
-camera.resolution = (1024, 768)
-camera.start_preview()
-#The camera turns on, the preview appears, and AE/AWB start calibrating.
+camera.configure(camera.create_still_configuration())
+camera.start()
+# Give the sensor 2 seconds to adjust exposure, white balance, and focus
 sleep(2)
+imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
+camera.capture_file("my_image.jpg")
+camera.stop()
+print("Image captured successfully!")
 #the camera finishes adjusting during these 2 seconds
 
-imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
+
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
-camera.capture(imagePath)
