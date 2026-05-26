@@ -1,5 +1,5 @@
 #!/bin/bash
-scp "$(pwd)/LocalRaspberryExecutor.sh" wiseproject@192.168.1.151:
+scp "$(pwd)/LocalRaspberryExecutor.sh" wiseproject@WiseProject.local:
 echo "-------------------GOING INTO RASPBERRY---------------------"
 echo "-----------------------------------------------------------"
-ssh -t wiseproject@192.168.1.151 "bash ~/LocalRaspberryExecutor.sh"
+ssh -t wiseproject@WiseProject.local "bash ~/LocalRaspberryExecutor.sh"

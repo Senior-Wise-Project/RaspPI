@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-HOST="wiseproject@192.168.1.151"
+HOST="wiseproject@WiseProject.local"
 cd "$(pwd)"
 cd ..
 KEY=$(pwd)

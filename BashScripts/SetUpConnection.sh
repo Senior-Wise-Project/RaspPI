@@ -1,5 +1,5 @@
 #!/bin/bash
-#only run once
+#only run once after reflash
 
 set -e
 KEY="$HOME/.ssh/id_ed25519"
@@ -12,4 +12,4 @@ else
 fi
 
 echo "Copying key to $HOST ..."
-sudo ssh-copy-id -i "${KEY}.pub" wiseproject@192.168.1.151
+sudo ssh-copy-id -i "${KEY}.pub" wiseproject@WiseProject.local
