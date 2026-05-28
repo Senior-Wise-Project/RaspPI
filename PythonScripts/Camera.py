@@ -3,11 +3,12 @@ from time import sleep
 from pathlib import Path
 import cv2
 import numpy as np
+import os
 
 def detectCenter():
-    imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
-    img = cv2.imread(imagePath)
-    img = img.copy()
+    imagePath = Path.cwd().parent / Path('Images') / Path('image2.jpg')
+    img1 = cv2.imread(imagePath)
+    img = img1.copy()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
@@ -59,14 +60,18 @@ def detectCenter():
     else:
         return None
     '''
+    destination = Path.cwd().parent / Path('Images') / Path("processedImage.jpg")
+    # 3. Safety check: Create the folder if it doesn't exist yet
+    os.makedirs(destination, exist_ok=True)
+
+    cv2.imwrite(destination, img)
 
 
 
-    cv2.imshow("Best Geometric Circle", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-detectCenter()
-""""
+    #cv2.imshow("Best Geometric Circle", img)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+
 camera = Picamera2()
 #-----------------------------------
 # What you write:
@@ -84,8 +89,10 @@ imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
 camera.capture_file(imagePath)
 camera.stop()
 print("Image captured successfully!")
+detectCenter()
 #the camera finishes adjusting during these 2 seconds
 
 
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
-"""
+
+''
