@@ -2,12 +2,20 @@
 from gpiozero import DistanceSensor
 from gpiozero import Motor
 from Stepper import StepperClass
-
+from time import sleep
 #This is the set-up code for the distance sensor
 echo = 5;
 trigger = 4;
 sensor = DistanceSensor(echo, trigger)
-distance = sensor.distance()
+try:
+    while True:
+        # sensor.distance returns the value in meters
+        distance_cm = sensor.distance * 100
+        print(f"Distance: {distance_cm:.2f} cm")
+        sleep(0.5)
+
+except KeyboardInterrupt:
+    print("Measurement stopped by user.")
 #----------------------------------------
 
 #This is the set-up code for the DC motor
