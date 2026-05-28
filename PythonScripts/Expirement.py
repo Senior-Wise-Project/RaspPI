@@ -4,7 +4,7 @@ N_values = np.array([])
 Xavg_values = np.array([])
 V_values = np.array([])
 angles = [15, 30, 45, 60, 75]
-Sin_vals = np.arrays([])
+Sin_vals = np.array([])
 for i in angles:
     sinVal = math.sin(2*i)
     Sin_vals = np.append(Sin_vals, sinVal)

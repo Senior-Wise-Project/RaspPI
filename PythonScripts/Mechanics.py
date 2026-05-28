@@ -5,9 +5,9 @@ from PythonScripts.Stepper import Stepper
 
 
 #This is the set-up code for the distance sensor
-dPin1 = 5;
-dPin2 = 4;
-sensor = DistanceSensor(dPin1, dPin2)
+echo = 5;
+trigger = 4;
+sensor = DistanceSensor(echo, trigger)
 distance = sensor.distance()
 #----------------------------------------
 
