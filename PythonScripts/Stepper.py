@@ -3,7 +3,7 @@ from gpiozero import OutputDevice
 from time import time
 
 
-class Stepper:
+class StepperClass:
     def __init__(self, number_of_steps, *motor_pins):
         self.step_number = 0
         self.direction = 0

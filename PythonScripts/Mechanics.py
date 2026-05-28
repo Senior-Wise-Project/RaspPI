@@ -1,7 +1,7 @@
 #We will be using the gpiozero library for rasberry pi
 from gpiozero import DistanceSensor
 from gpiozero import Motor
-from PythonScripts.Stepper import Stepper
+from PythonScripts.Stepper import StepperClass
 
 
 #This is the set-up code for the distance sensor
@@ -26,7 +26,7 @@ sPin3 = 6;
 sPin4 = 13;
 steps = 2048;
 speed = 10;
-step_motor = Stepper(steps, sPin1, sPin2, sPin3, sPin4)
+step_motor = StepperClass(steps, sPin1, sPin2, sPin3, sPin4)
 step_motor.set_speed(speed);
 s2Pin1 = 17;
 s2Pin2 = 27;
@@ -34,7 +34,7 @@ s2Pin3 = 22;
 s2Pin4 = 23;
 steps = 2048;
 speed = 10;
-step_motor2 = Stepper(steps, s2Pin1, s2Pin2, s2Pin3, s2Pin4)
+step_motor2 = StepperClass(steps, s2Pin1, s2Pin2, s2Pin3, s2Pin4)
 step_motor2.set_speed(speed);
 #step_motor.step(1024) rotates the stepper motor halfway
 #step_motor.step(-1024) rotates the stepper motor halfway in the other direction
