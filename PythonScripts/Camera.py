@@ -6,8 +6,13 @@ import numpy as np
 import os
 
 def detectCenter():
-    imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
+    imagePath = Path('/home/wiseproject/Images/image.jpg')
+    if not os.path.exists(imagePath.parent):
+        os.makedirs(imagePath.parent)
     img1 = cv2.imread(imagePath)
+    if img1 is None:
+        print("Failed to load image")
+        return
     img = img1.copy()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -19,12 +24,13 @@ def detectCenter():
     contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     valid_circles = []
 
+    #infinite loop?
     for cnt in contours:
         # Calculate area and perimeter
         area = cv2.contourArea(cnt)
         perimeter = cv2.arcLength(cnt, True)
 
-        # Skip t    iny speckles or division-by-zero errors
+        # Skip tiny speckles or division-by-zero errors
         if area < 100 or perimeter == 0:
             continue
 
@@ -62,7 +68,7 @@ def detectCenter():
     '''
     destination = Path.cwd().parent / Path('Images') / Path("processedImage.jpg")
     # 3. Safety check: Create the folder if it doesn't exist yet
-    os.makedirs(destination, exist_ok=True)
+    os.makedirs(destination.parent, exist_ok=True)
 
     cv2.imwrite(destination, img)
 
@@ -85,7 +91,7 @@ camera.configure(camera.create_still_configuration())
 camera.start()
 # Give the sensor 2 seconds to adjust exposure, white balance, and focus
 sleep(2)
-imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
+imagePath = Path('/home/wiseproject/Images/image.jpg')
 camera.capture_file(imagePath)
 camera.stop()
 print("Image captured successfully!")
@@ -94,5 +100,3 @@ detectCenter()
 
 
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
-
-''
