@@ -4,8 +4,8 @@ from gpiozero import Motor
 from Stepper import StepperClass
 from time import sleep
 #This is the set-up code for the distance sensor
-echo = 5;
-trigger = 4;
+echo = 4;
+trigger = 5;
 sensor = DistanceSensor(echo, trigger)
 try:
     while True:
