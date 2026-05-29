@@ -1,12 +1,12 @@
 from time import sleep
-#from picamera2 import Picamera2
+from picamera2 import Picamera2
 from pathlib import Path
 import cv2
 import numpy as np
 import os
 
 def detectCenter():
-    imagePath = Path.cwd().parent / Path('Images') / Path('image2.jpg')
+    imagePath = Path.cwd().parent / Path('Images') / Path('image.jpg')
     img1 = cv2.imread(imagePath)
     img = img1.copy()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -24,7 +24,7 @@ def detectCenter():
         area = cv2.contourArea(cnt)
         perimeter = cv2.arcLength(cnt, True)
 
-        # Skip tiny speckles or division-by-zero errors
+        # Skip t    iny speckles or division-by-zero errors
         if area < 100 or perimeter == 0:
             continue
 
