@@ -2,6 +2,7 @@ import math
 class Formulas:
     g = 9.81
     def findAngle(v, x, h, high):
+        global g
         part1 = ((v*v) + math.sqrt((v^4-g*(g*x^2-2*h*v^2))))/(g*x)
         part2 = ((v*v) - (v*v) + math.sqrt((v^4-g*(g*x^2-2*h*v^2))))/(g*x)
         ans1 = math.atan(part1)

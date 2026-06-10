@@ -4,11 +4,38 @@ from pathlib import Path
 import cv2
 import numpy as np
 import os
+import Mechanics
 
 absoluteCenter = (1, 1)
 isAligned = False
+x_min = 0
+x_max = 0
+y_min = 0
+y_max = 0
+height = 960
+width = 1440
+tolerance_px = 0
 
-def check_camera_alignment(target_center, frame, tolerance_px=25):
+
+def alignCameraHorizontally():
+    global height, width, x_max, x_min, absoluteCenter
+    np = 0.01
+    cx = width/2
+    tx = absoluteCenter[0]
+    angle = np*(cx-tx)
+    if(tx > x_min and tx < x_max):
+        return
+    else:
+        Mechanics.rotateBase(angle)
+        absoluteCenter = detectCenter()
+        if(absoluteCenter == None):
+            return
+        alignCameraHorizontally()
+
+    print("Aligned!")
+
+def check_camera_alignment(target_center, frame):
+    global x_min, y_min, x_max, y_max, tolerance_px
     """
     Determines if the target center is aligned with the camera center.
     Also draws a visual cue box onto the frame.
@@ -25,6 +52,9 @@ def check_camera_alignment(target_center, frame, tolerance_px=25):
     # 1. Grab camera dimensions and calculate absolute center
     height, width = frame.shape[:2]
     cam_cx, cam_cy = width // 2, height // 2
+    print("EEEEE")
+    print(height)
+    print(width)
 
     # 2. Define the boundary thresholds for your alignment box
     x_min, x_max = cam_cx - tolerance_px, cam_cx + tolerance_px
@@ -106,16 +136,17 @@ def detectCenter():
         cv2.circle(img, center, 2, (0, 0, 255), 3)
 
     #Grabs the center of the most circular object
-    '''
     if len( valid_circles) != 0:
         center= valid_circles[0][1]
         print(center)
         return center
     else:
         return None
+
     '''
-    isAligned = check_camera_alignment(absoluteCenter, img)
-    print(isAligned)
+        isAligned = check_camera_alignment(absoluteCenter, img)
+        print(isAligned)
+    
     destination = Path.cwd().parent / Path('Images') / Path("processedImage.jpg")
     # 3. Safety check: Create the folder if it doesn't exist yet
     os.makedirs(destination.parent, exist_ok=True)
@@ -128,6 +159,7 @@ def detectCenter():
     cv2.imshow("Best Geometric Circle", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    '''
 
 
 detectCenter()
