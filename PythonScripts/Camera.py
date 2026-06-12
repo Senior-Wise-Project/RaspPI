@@ -34,6 +34,40 @@ def alignCameraHorizontally():
 
     print("Aligned!")
 
+
+def alignCameraVertically():
+    global height, width, x_max, x_min, absoluteCenter
+    np = 0.01
+    cx = width / 2
+    tx = absoluteCenter[0]
+    angle = np * (cx - tx)
+    if (tx > y_min and tx < y_max):
+        return
+    else:
+        Mechanics.rotateBarrel(angle)
+        absoluteCenter = detectCenter()
+        if (absoluteCenter == None):
+            return
+        alignCameraVertically()
+
+#Precondition: The camera is already aligned
+
+#angle1 is less than angle 2
+def lookAround(angle1, angle2):
+    Mechanics.rotateBarrel(-Mechanics.getVertcalAngle()/2)
+    currAngle = Mechanics.getHorizontalAngle()
+    angle = 2
+
+    while(detectCenter() == None):
+        if(currAngle+angle>= angle2 or currAngle+angle<=angle1):
+            angle *= -1
+            Mechanics.rotateBarrel(5)
+        Mechanics.rotateBase(angle)
+        currAngle+=angle
+    return
+
+
+
 def check_camera_alignment(target_center, frame):
     global x_min, y_min, x_max, y_max, tolerance_px
     """
