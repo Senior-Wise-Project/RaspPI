@@ -14,7 +14,8 @@ y_min = 0
 y_max = 0
 height = 960
 width = 1440
-tolerance_px = 0
+tolerance_px = 15
+imagePath = Path('/home/wiseproject/Images/image2.jpg')
 
 
 def alignCameraHorizontally():
@@ -29,7 +30,7 @@ def alignCameraHorizontally():
         Mechanics.rotateBase(angle)
         absoluteCenter = detectCenter()
         if(absoluteCenter == None):
-            return
+            return "sigma"
         alignCameraHorizontally()
 
     print("Aligned!")
@@ -50,20 +51,25 @@ def alignCameraVertically():
             return
         alignCameraVertically()
 
+
 #Precondition: The camera is already aligned
 
 #angle1 is less than angle 2
 def lookAround(angle1, angle2):
+    global imagePath
     Mechanics.rotateBarrel(-Mechanics.getVertcalAngle()/2)
     currAngle = Mechanics.getHorizontalAngle()
     angle = 2
-
     while(detectCenter() == None):
         if(currAngle+angle>= angle2 or currAngle+angle<=angle1):
             angle *= -1
             Mechanics.rotateBarrel(5)
+            camera.capture_file(imagePath)
+            camera.stop()
         Mechanics.rotateBase(angle)
         currAngle+=angle
+        camera.capture_file(imagePath)
+        camera.stop()
     return
 
 
@@ -79,6 +85,8 @@ def check_camera_alignment(target_center, frame):
     :param tolerance_px: how many pixels out from absolute center the target can drift
     :return: Boolean (True if aligned, False if not)
     """
+
+
     # If no target was found in the frame, we are obviously not aligned
     if target_center is None:
         return False
@@ -100,6 +108,7 @@ def check_camera_alignment(target_center, frame):
     # 4. Check if the target center is inside the threshold box
     is_aligned = (x_min <= target_x <= x_max) and (y_min <= target_y <= y_max)
 
+
     # 5. Visual Feedback: Cyan if locked on, Red if misaligned
     box_color = (255, 255, 0) if is_aligned else (0, 0, 255)
 
@@ -115,7 +124,7 @@ def check_camera_alignment(target_center, frame):
 def detectCenter():
     global absoluteCenter
     global isAligned
-    imagePath = Path.cwd().parent / Path('Images') / Path("image.jpg")
+    imagePath = Path.cwd().parent / Path('Images') / Path("image2.jpg")
     if not os.path.exists(imagePath.parent):
         os.makedirs(imagePath.parent)
     img1 = cv2.imread(imagePath)
@@ -166,9 +175,11 @@ def detectCenter():
             absoluteCenter = center
         print(f"🎯 Dartboard detected! Circularity Match: {score:.2f}")
         print(center)
+
+
         cv2.circle(img, center, radius, (0, 255, 0), 3)
         cv2.circle(img, center, 2, (0, 0, 255), 3)
-
+    '''
     #Grabs the center of the most circular object
     if len( valid_circles) != 0:
         center= valid_circles[0][1]
@@ -178,8 +189,8 @@ def detectCenter():
         return None
 
     '''
-        isAligned = check_camera_alignment(absoluteCenter, img)
-        print(isAligned)
+    #isAligned = check_camera_alignment(absoluteCenter, img)
+    #print(isAligned)
     
     destination = Path.cwd().parent / Path('Images') / Path("processedImage.jpg")
     # 3. Safety check: Create the folder if it doesn't exist yet
@@ -193,14 +204,14 @@ def detectCenter():
     cv2.imshow("Best Geometric Circle", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    '''
+
 
 
 detectCenter()
 print("EEEEEEEEE")
 print(absoluteCenter)
-
 '''
+
 camera = Picamera2()
 #-----------------------------------
 # What you write:
@@ -214,13 +225,22 @@ camera.configure(camera.create_still_configuration())
 camera.start()
 # Give the sensor 2 seconds to adjust exposure, white balance, and focus
 sleep(2)
-imagePath = Path('/home/wiseproject/Images/image.jpg')
+
 camera.capture_file(imagePath)
 camera.stop()
+
 print("Image captured successfully!")
 detectCenter()
 #the camera finishes adjusting during these 2 seconds
 
+try:
+    while True:
+        lookAround(45, 90)
+        alignCameraVertically()
+        alignCameraHorizontally()
+        Mechanics.
+except KeyboardInterrupt:
+    print("terminated")
 
 #Grabs an absolute path that works for all operating systems as well as for any computer b/c of it using relative paths.
 

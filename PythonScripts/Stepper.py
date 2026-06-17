@@ -36,7 +36,7 @@ class StepperClass:
         steps_left = abs(steps_to_move)
         while steps_left > 0:
             current_time = time()
-            if (current_time - self.last_step_time) >= self.step_delay:
+                if (current_time - self.last_step_time) >= self.step_delay:
                 self.last_step_time = current_time
                 self.step_number += self.direction
                 self.step_number %= self.number_of_steps
